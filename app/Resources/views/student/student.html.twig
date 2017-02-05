@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div>
+		<h1>REGISTRO DE ESTUDIANTE</h1>
+	</div>
+	<div>
+    	{% for flash_message in app.session.flashBag.get('success') %}
+                {{ flash_message | upper }}
+        {% endfor %}
+	</div>
+	<div>
+    	{% if form is defined %}
+            {{ form_start(form) }}
+            {#{% form_theme form 'bootstrap_3_layout.html.twig' %}#}
+             		{{ form_row(form.name) }}
+             		{{ form_row(form.lastname) }}
+             		{{ form_row(form.email) }}
+             		{{ form_row(form.phone) }}
+             		{{ form_row(form.address) }}
+             		{{ form_row(form.userCredFk) }}
+             		{{ form_row(form.registrar) }}
+         	{{ form_end(form) }}
+         {% endif %}
+	</div>
+{% endblock %}
