@@ -26,6 +26,8 @@ class EstudianteController extends Controller
 	 */
 	public function registerAction(Request $request)
 	{
+		$students=$this->estAll();
+		$subjects=$this->matAll();
 		//Creamos el formulario
 		$student= new Estudiante();
 		$form=$this->createForm(EstudianteType::class, $student);
@@ -36,23 +38,23 @@ class EstudianteController extends Controller
 		//Bucle if que permite verificar si el form es valido y correcto
 		if($form->isSubmitted() && $form->isValid()){
 			//$student=$form->getData(); //Tomo los datos del form
-			
+						
 			//guardando estudiante
 			$em=$this->getDoctrine()->getManager();
 			$em->persist($student);
 			$em->flush();
 			
 			//Retorna todos los estudiantes registrados
-			//$students=$this->estAll();
-			//$subjects=$this->matAll();
+			$students=$this->estAll();
+			$subjects=$this->matAll();
 			//enviando mensaje
 			$this->addFlash('success', 'Estudiante registrado');
 			
-			return $this->redirectToRoute('student/student.html.twig');
-			//return $this->render('student/list.html.twig',array('students'=>$students, 'subjects'=>$subjects));
+			//return $this->redirectToRoute('list');
+			return $this->render('student/student.html.twig',array('students'=>$students, 'subjects'=>$subjects,'form'=>$form->createView()));
 		}
 				
-		return $this->render('student/student.html.twig',array('form'=>$form->createView()));
+		return $this->render('student/student.html.twig',array('students'=>$students, 'subjects'=>$subjects,'form'=>$form->createView()));
 	}
 	
 	/**
@@ -73,7 +75,8 @@ class EstudianteController extends Controller
 		$students=$this->estAll();
 		$em=$this->getDoctrine()->getManager();
 		$student=$em->find('AppBundle:Estudiante', $id); //Obtiene el objeto usuario que se desea modificar
-		
+		dump($student);
+		die();
 		//Valida si el estudiante existe 
 		if($student==null){
 			$ms="El estudiante con id ".$id." no EXISTE";

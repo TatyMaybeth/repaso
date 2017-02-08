@@ -1,0 +1,37 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * CliPed
+ *
+ * @ORM\Table(name="cliped")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CliPedRepository")
+ */
+class CliPed
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /*RELACIONES*/
+    
+    /**
+     * @var int
+     * @ORM\ManyToOne(targetEntity="Clientes", inversedBy="CliPed")
+     * @ORM\JoinColumn(name="clienteFk", referencedColumnName="id")
+     */
+    private $clienteFk;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Pedidos", mappedBy="cabpedFk")
+     */
+    private $pedido;
+}

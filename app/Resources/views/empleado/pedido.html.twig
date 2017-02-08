@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div>
+		<h1>PEDIDOS</h1>
+	</div>
+	{#<div>
+    	{% for flash_message in app.session.flashBag.get('success') %}
+                {{ flash_message | upper }}
+        {% endfor %}
+	</div>#}
+    	<div>
+    	{% if form is defined %}
+            {{ form_start(form,{'attr': {'novalidate': 'novalidate'}}) }}
+            	
+         	{{ form_end(form,{'attr': {'novalidate': 'novalidate'}}) }}
+         {% endif %}
+	</div>
+	
+	
+	<table id="#PedidoTable" class="table table-striped">
+            <tr>
+                <th>Plato</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Total</th>
+            </tr>
+    	{%  for pedido in ped %}
+    		<tr>
+    			 {% for platos in plat %}
+                        {% if  pedido.plapedFk.id == platos.id%}
+    			 			<td>{{ platos.nombre }}</td>
+    			 		{% endif %}
+    			 		<td>{{ pedido.cantidad }}</td>
+    			 		<td>{{ pedido.precio }}</td>
+    			 		<td>{{ pedido.total }}</td>
+                 {% endfor %}
+        {% endfor %}
+    			 		
+    		</tr>
+    </table>
+
+{% endblock %}

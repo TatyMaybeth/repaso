@@ -23,4 +23,55 @@
          	{{ form_end(form) }}
          {% endif %}
 	</div>
+	
+	<div>
+		<h1>LISTA DE REGISTRO</h1>
+	</div>
+	<div>
+    	{% for flash_message in app.session.flashBag.get('success') %}
+                {{ flash_message | upper }}
+        {% endfor %}
+        
+        {% for flash_message in app.session.flashBag.get('error') %}
+            {{ flash_message | upper }}
+        {% endfor %}
+	</div>
+	
+	<div>
+	<table id="#EstudianteTable" class="table table-striped">
+            <tr>
+                <th>N</th>
+                <th>Codigo</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Correo</th>
+                 <th>Telefono</th>
+                  <th>Materia</th>
+            </tr>
+    	{%  for student in students %}
+    		<tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ student.id}}</td>
+                    <td>{{ student.name}}</td>
+                    <td>{{ student.lastname}}</td>
+                    <td>{{ student.email}}</td>
+                    <td>{{ student.address}}</td>
+                    <td>{{ student.phone}}</td>
+                    {% for mat in subjects %}
+                        {% if  student.userCredFk.id == mat.id%}
+                    		<td>{{ mat.name}}</td>
+                    		{#<td>{{ mat.creditos}}</td>#}
+                    	{% endif %}
+                    {% endfor %}
+                  <td>
+                  	 <a class="btn bg-info" href="{{ path('edit',{'id':student.id}) }}">Modificar</a>
+                  </td>
+                   <td>
+                  	 <a class="btn bg-info" href="{{ path('delete',{'id':student.id}) }}">Eliminar</a>
+                  </td>
+                  
+                    
+            </tr>
+    	{% endfor %}
+	</div>
 {% endblock %}
